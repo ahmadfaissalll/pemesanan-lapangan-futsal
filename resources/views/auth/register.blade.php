@@ -1,13 +1,13 @@
-<x-user.layout :title="'Register {{ $role === 2 ? 'Customer' : 'Admin' }}'">
-    <div class="container">
+<x-auth.layout :title="'Register'">
+    <div class="container" style="margin-top: 70px;">
         <div class="form">
             <div class="col-lg-7">
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Register {{ $role === 2 ? 'Customer' : 'Admin' }}</h1>
+                        <h1 class="card-title">Register</h1>
                     </div>
 
-                    <form class="form-horizontal" method="post" action="{{ $role === 2 ? '/register' : '/register-admin' }}">
+                    <form class="form-horizontal" method="post" action="/register">
                         @csrf
                         <div class="card-body">
                             <div class="form-group row">
@@ -61,15 +61,28 @@
                                     @enderror
                                 </div>
                             </div>
-                            <p>Sudah punya akun? <a href="{{ $role === 2 ? '/login' : '/login-admin' }}">Masuk</a></p>
+                            <div class="form-group row">
+                                <label for="role" class="col-sm-2 col-form-label">Role</label>
+                                <div class="col-sm-10">
+                                    <select name="role" id="role">
+                                      <option >-- Pilih Role --</option>
+                                      <option value="1">Admin</option>
+                                      <option value="2">Customer</option>
+                                    </select>
+                                    <br>
+                                    @error('role')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <p>Sudah punya akun? <a href="/login">Masuk</a></p>
                         </div>
 
                         <div class="card-footer">
-                            <input type="hidden" name="role" value="{{ $role }}">
                             <button type="submit" class="btn btn-info">Register</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-</x-user.layout>
+</x-auth.layout>

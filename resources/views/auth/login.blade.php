@@ -1,4 +1,4 @@
-<x-user.layout :title="'Login'">
+<x-auth.layout :title="'Login'">
     <div class="container">
         <div class="form">
             <div class="col-lg-6">
@@ -35,7 +35,7 @@
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <p>Belum punya akun? <a href="{{ $role === 2 ? '/register' : '/register-admin' }}">Daftar</a></p>
+                            <p>Belum punya akun? <a href="/register">Daftar</a></p>
                         </div>
 
                         <div class="card-footer">
@@ -45,4 +45,4 @@
                 </div>
             </div>
         </div>
-</x-user.layout>
+</x-auth.layout>

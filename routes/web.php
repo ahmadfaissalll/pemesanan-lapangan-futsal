@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\{Lapangan, Penyewaan};
+use App\Models\Lapangan;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\{RegisterController, LoginController, LogoutController};
 use App\Http\Controllers\Print\Lapangan\PrintController as LapanganPrintController;
 use App\Http\Controllers\Print\Penyewaan\PrintController as PenyewaanPrintController;
 use App\Http\Controllers\Customer\{NotificationController, BookingController, HomeController, LapanganController as CustomerLapanganController, PenyewaanController as CustomerPenyewaanController};
@@ -25,12 +26,12 @@ Route::get('/getLapangan/{lapangan}', function (Lapangan $lapangan) {
 });
 
 
-// CUSTOMER
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/lapangan', [CustomerLapanganController::class, 'index']);
 
-Route::middleware(['auth', 'can:is_customer'])->group(function () {
+// CUSTOMER
+
+Route::middleware(['auth', 'can:is-customer'])->group(function () {
   Route::resource('/notification', NotificationController::class)->only(['index', 'destroy']);
 
   // booking lapangan
@@ -38,7 +39,6 @@ Route::middleware(['auth', 'can:is_customer'])->group(function () {
     Route::get('/booking', 'create');
     Route::post('/booking', 'store');
   });
-
 
   Route::get('/penyewaan', [CustomerPenyewaanController::class, 'index']);
 });
@@ -48,13 +48,12 @@ Route::middleware(['auth', 'can:is_customer'])->group(function () {
 
 // ADMIN
 
-Route::middleware(['auth', 'can:is_admin'])->group(function () {
+Route::middleware(['auth', 'can:is-admin'])->group(function () {
 
   Route::get('/dashboard', function () {
     return view('dashboard.home');
   });
-  
-  
+
   Route::prefix('dashboard')->group(function () {
 
     Route::get('/lapangan/print', LapanganPrintController::class);
@@ -71,33 +70,21 @@ Route::middleware(['auth', 'can:is_admin'])->group(function () {
 });
 
 
-// admin
-Route::controller(AdminController::class)->group(function () {
-  Route::middleware('guest')->group(function () {
-    Route::get('/register-admin', 'create');
-    Route::post('/register-admin', 'store');
+// user authentication
+Route::middleware('guest')->group(function () {
+  Route::controller(LoginController::class)->group(function () {
 
-    Route::get('/login-admin', 'index')->name('login-admin');
-    Route::post('/login-admin', 'authenticate');
+    Route::get('/login', 'index')->name('login');
+    Route::post('/login', 'authenticate');
   });
-  // 'can:is_admin'
-  Route::middleware(['auth', 'can:is_admin'])->group(function () {
-    Route::post('/logout-admin', 'logout');
+
+  Route::controller(RegisterController::class)->group(function () {
+    Route::get('/register', 'index');
+    Route::post('/register', 'create');
   });
 });
 
 
-// customer
-Route::controller(CustomerController::class)->group(function () {
-  Route::middleware('guest')->group(function () {
-    Route::get('/register', 'register');
-    Route::post('/register', 'postRegister');
-
-    Route::get('/login', 'login')->name('login');
-    Route::post('/login', 'postLogin');
-  });
-
-  Route::middleware('auth')->group(function () {
-    Route::post('/logout', 'logout');
-  });
+Route::middleware('auth')->group(function () {
+  Route::post('/logout', [LogoutController::class, 'logout']);
 });

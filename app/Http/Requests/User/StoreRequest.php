@@ -26,19 +26,13 @@ class StoreRequest extends FormRequest
    */
   public function rules(Request $request)
   {
-    // role validation
-    $role = $request->input('role');
-    if ( !isset($role) || !in_array($role, [1, 2]) ) {
-      return back()->withErrors(['username' => 'Ada yang salah coba reload halaman dan coba lagi']);
-    }
-
     return [
       'username' => 'required',
       'email' => ['required', 'email', Rule::unique('users')],
       'name' => ['required', Rule::unique('users')],
       'password' => 'required|confirmed',
       'password_confirmation' => 'required',
-      'role' => 'required|numeric',
+      'role' => 'required|numeric|in:1,2',
     ];
   }
 }

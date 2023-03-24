@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
   public function index()
   {
-    return view('user.login');
+    return view('auth.login');
   }
 
   public function authenticate(Request $request)
@@ -36,6 +36,8 @@ class LoginController extends Controller
     if ($isLoginSuccess) {
       $request->session()->regenerate();
 
+      // dd(Auth::user()->role);
+      // dd($this->redirectTo());
       return redirect($this->redirectTo());
     }
 
@@ -47,7 +49,7 @@ class LoginController extends Controller
   protected function redirectTo()
   {
     // ini admin
-    if (Auth::user()->role === 1) return '/dashboard';
+    if (Auth::user()->role == 1) return '/dashboard';
 
     // ini customer
     return '/';

@@ -31,7 +31,7 @@
                         class="{{ Request::is('dashboard/lapangan') ? 'nav-active' : '' }}">Lapangan</a></li>
                 <li><a href="/dashboard/penyewaan" class="{{ Request::is('dashboard/penyewaan') ? 'nav-active' : '' }}">Penyewaan</a></li>
                 <li>
-                    <form action="/logout-admin" method="post">
+                    <form action="/logout" method="post">
                         @csrf
                         <a href=""><button type="submit" style="cursor: pointer;" onclick="return confirm('anda yakin ingin logout?')">Logout</button></a>
                     </form>
