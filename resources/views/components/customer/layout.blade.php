@@ -98,7 +98,7 @@
                         <a class="nav-link link-secondary {{ last(explode('/', url()->current())) == 'lapangan' ? 'link-dark' : '' }}"
                             href="/lapangan">Lapangan</a>
                     </li>
-                    @can('is-customer')
+                    @can('is_customer')
                         <li class="nav-item">
                             <a class="nav-link link-secondary {{ last(explode('/', url()->current())) == 'booking' ? 'link-dark' : '' }}"
                                 href="/booking">Booking</a>
@@ -122,9 +122,9 @@
                         </li>
                     @endguest
 
-                    @can('is-customer')
+                    @can('is_customer')
                         <li class="nav-item">
-                            <a href="/notification" class="btn btn-info">
+                            <a href="/notifications" class="btn btn-info">
                                 Notifications
                                 <span class="badge badge-light rounded-circle"
                                     style="background-color: rgb(72, 240, 72);">{{ $notificationCount }}</span>
@@ -139,7 +139,7 @@
                         </li>
                     @endcan
 
-                    @can('is-admin')
+                    @can('is_admin')
                         <li class="nav-item">
                             <a class="nav-link link-success" href="/dashboard">Dashboard admin</a>
                         </li>

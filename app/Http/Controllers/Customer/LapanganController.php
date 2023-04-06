@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Lapangan;
 use App\Models\Notification;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class LapanganController extends Controller
 {
@@ -19,6 +23,8 @@ class LapanganController extends Controller
     // auth()->loginUsingId(1);
     // auth()->loginUsingId(5);
     // auth()->logout();
+
+    
     $lapangans = Lapangan::orderByDesc('created_at')->filter(request('keyword'))->paginate(10);
 
     $counter = ($lapangans->perPage() * $lapangans->currentPage()) - $lapangans->perPage() + 1;

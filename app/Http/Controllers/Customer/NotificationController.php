@@ -27,6 +27,6 @@ class NotificationController extends Controller
         session()->flash('message', 'Notifikasi gagal dihapus');
       }
 
-      return redirect(route('notification.index'));
+      return redirect(route('notifications.index'));
     }
 }

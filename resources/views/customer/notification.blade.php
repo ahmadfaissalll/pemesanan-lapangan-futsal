@@ -4,8 +4,8 @@
     <div class="container">
         <div class="d-flex justify-content-end">
 
-            <form action="/notification" method="get">
-                <a href="/notification" class="link-success">Refresh</a>
+            <form action="/notifications" method="get">
+                <a href="/notifications" class="link-success">Refresh</a>
                 <input type="text" name="keyword" value="{{ request('keyword') }}">
                 <button type="submit" class="btn btn-success">Search</button>
             </form>
@@ -25,7 +25,7 @@
                     <td>{{ $notification->data }}</td>
                     <td>{{ \Carbon\Carbon::parse($notification->created_at)->translatedFormat('l, d F Y H:i') }}</td>
                     <td class="text-center">
-                      <form action="{{ route('notification.destroy', $notification->id) }}" method="post">
+                      <form action="{{ route('notifications.destroy', $notification->id) }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Hapus</button>

@@ -31,8 +31,8 @@ Route::get('/lapangan', [CustomerLapanganController::class, 'index']);
 
 // CUSTOMER
 
-Route::middleware(['auth', 'can:is-customer'])->group(function () {
-  Route::resource('/notification', NotificationController::class)->only(['index', 'destroy']);
+Route::middleware(['auth', 'is_role:2'])->group(function () {
+  Route::resource('/notifications', NotificationController::class)->only(['index', 'destroy']);
 
   // booking lapangan
   Route::controller(BookingController::class)->group(function () {
@@ -48,7 +48,7 @@ Route::middleware(['auth', 'can:is-customer'])->group(function () {
 
 // ADMIN
 
-Route::middleware(['auth', 'can:is-admin'])->group(function () {
+Route::middleware(['auth', 'is_role:1'])->group(function () {
 
   Route::get('/dashboard', function () {
     return view('dashboard.home');
