@@ -4,8 +4,8 @@
     <div class="container">
         <div class="d-flex justify-content-end">
 
-            <form action="/notification" method="get">
-                <a href="/notification" class="link-success">Refresh</a>
+            <form action="/notifications" method="get">
+                <a href="/notifications" class="link-success">Refresh</a>
                 <input type="text" name="keyword" value="{{ request('keyword') }}">
                 <button type="submit" class="btn btn-success">Search</button>
             </form>
